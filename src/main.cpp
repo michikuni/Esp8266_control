@@ -2,11 +2,11 @@
 #include <PubSubClient.h>
 
 // Thông tin WiFi
-const char* ssid = "Tang1-Hieu01";
-const char* password = "123123a@";
+const char* ssid = "Trung Tam TT-TV T3";
+const char* password = "12345679";
 
 // Thông tin MQTT
-const char* mqtt_server = "192.168.2.110"; // Địa chỉ MQTT broker (máy tính Flask)
+const char* mqtt_server = "192.168.22.76"; // Địa chỉ MQTT broker (máy tính Flask)
 const int mqtt_port = 1883;
 const char* mqtt_topic = "home/test"; // Topic nhận và gửi dữ liệu từ Flask
 const char* mqtt_topic_sub = "home/sub";
@@ -30,7 +30,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
 void setup() {
   Serial.begin(9600);
-  Serial1.begin(9600);
+  Serial.println("Init");
   WiFi.begin(ssid, password);
 
   // Kết nối WiFi
@@ -77,6 +77,8 @@ void loop() {
   // Gửi dữ liệu từ Serial lên MQTT
   String payload1 = Serial.readStringUntil('\n');
   if (payload1 != "") {
+    printf(payload1.c_str());
+    Serial.print(payload1.c_str());
     client.publish(mqtt_topic, payload1.c_str()); // Gửi payload đến topic
   }
 }
