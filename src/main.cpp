@@ -17,14 +17,13 @@ PubSubClient client(espClient);
 
 // Hàm callback khi nhận dữ liệu từ MQTT
 void callback(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message from topic: ");
-  Serial.println(topic);
-  Serial.print("Message content: ");
-  
+  // Serial.print("Message content: ");
+  // Serial.print(length);
+  String data = "";
   for (int i = 0; i < length; i++) {
-    Serial.print((char)payload[i]);  // In từng ký tự từ payload
+    data+=(char)payload[i];  // In từng ký tự từ payload
   }
-  Serial.println();  // Xuống dòng sau khi in xong
+  Serial.println(data);  // Xuống dòng sau khi in xong
 }
 
 
@@ -77,8 +76,6 @@ void loop() {
   // Gửi dữ liệu từ Serial lên MQTT
   String payload1 = Serial.readStringUntil('\n');
   if (payload1 != "") {
-    printf(payload1.c_str());
-    Serial.print(payload1.c_str());
     client.publish(mqtt_topic, payload1.c_str()); // Gửi payload đến topic
   }
 }
